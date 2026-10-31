@@ -50,8 +50,8 @@ hidden terminal WS:         /\s+/;
 
 // ---------- 句点：子句结束符 vs 模块限定符 ----------
 //  最长匹配区分：`. ` 命中 END（2 字符），单独的 `.` 命中 DOT。
-terminal DOT: /\./;
-terminal END: /\.\s/;
+terminal END: /\.(?![^\s%])/;
+terminal DOT: /\./; 
 
 // ---------- 括号：紧密跟随 vs 前面有空白 ----------
 //  ⚠ WS 声明在 OPEN 之前且为 hidden，前导空白通常先被 WS 吃掉，
@@ -367,10 +367,10 @@ Primary infers Expression:
           'else' elseExpr=Goal
       CLOSE
     | {infer ListLiteral} '[' (elems+=Goal (',' elems+=Goal)* ('|' tail=Goal)?)? ']'
-    | {infer CompoundDataTerm} name=QualifiedName OPEN_CT args+=Goal (',' args+=Goal)* CLOSE
+    | {infer CompoundDataTerm} name=NAME OPEN_CT args+=Goal (',' args+=Goal)* CLOSE
     | {infer ParenExpr} (OPEN | OPEN_CT) value=Goal CLOSE
     | {infer StateVarRef} value=STATE_VAR
-    | {infer NameRef} name=QualifiedName
+    | {infer NameRef} name=NAME
     | {infer NameRef} OPEN OpToken CLOSE
     | {infer VarRef} name=VARIABLE
     | {infer ImplDefined} value=IMPLEMENTATION_DEFINED;
