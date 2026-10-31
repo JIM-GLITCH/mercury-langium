@@ -1,0 +1,16 @@
+{
+    "projectName": "Mercury",
+    "languages": [
+        {
+            "id": "mercury",
+            "grammar": "src/mercury.langium",
+            "fileExtensions": [
+                "m"
+            ],
+            "textMate": {
+                "out": "syntaxes/mercury.tmLanguage.json"
+            }
+        }
+    ],
+    "out": "src/generated"
+}
